@@ -23,7 +23,7 @@ app.use(express.static('public'));
 
 
 // Database configuration with mongoose
-mongoose.connect('mongodb://localhost/week18day3mongoose');
+mongoose.connect('mongodb://localhost/speedscraper');
 var db = mongoose.connection;
 
 // show any mongoose errors
@@ -50,45 +50,47 @@ app.get('/', function(req, res) {
   res.send(index.html);
 });
 
-// A GET request to scrape the echojs website.
+// A GET request to scrape the supercars website.
 app.get('/scrape', function(req, res) {
+	console.log("hello");
 	// first, we grab the body of the html with request
-  request('http://www.echojs.com/', function(error, response, html) {
+  request('http://www.nytimes.com/pages/politics/index.html?action=click&pgtype=Homepage&region=TopBar&module=HPMiniNav&contentCollection=Politics&WT.nav=page', function(error, response, html) {
   	// then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(html);
     // now, we grab every h2 within an article tag, and do the following:
-    $('article h2').each(function(i, element) {
-
+    $('.columnGroup > .story').each(function(i, element) {
     		// save an empty result object
-				var result = {};
+		var result = {};
 
-				// add the text and href of every link, 
-				// and save them as properties of the result obj
-				result.title = $(this).children('a').text();
-				result.link = $(this).children('a').attr('href');
+		// add the text and href of every link, 
+		// and save them as properties of the result obj
+		result.title = $(this).find('a').text();
+		result.link = $(this).find('a').attr('href');
+		result.image = $(this).find('img').attr('src');
+		console.log(result);
+		// using our Article model, create a new entry.
+		// Notice the (result):
+		// This effectively passes the result object to the entry (and the title and link)
+		var entry = new Article (result);
 
-				// using our Article model, create a new entry.
-				// Notice the (result):
-				// This effectively passes the result object to the entry (and the title and link)
-				var entry = new Article (result);
-
-				// now, save that entry to the db
-				entry.save(function(err, doc) {
-					// log any errors
-				  if (err) {
-				    console.log(err);
-				  } 
-				  // or log the doc
-				  else {
-				    console.log(doc);
-				  }
-				});
-
+		// now, save that entry to the db
+		entry.save(function(err, doc) {
+			// log any errors
+			console.log(doc)
+		  if (err) {
+		    console.log(err);
+		  } 
+		  // or log the doc
+		  else {
+		    console.log(doc);
+		  }
+		});
 
     });
+      res.redirect("/");
+
   });
   // tell the browser that we finished scraping the text.
-  res.send("Scrape Complete");
 });
 
 // this will get the articles we scraped from the mongoDB

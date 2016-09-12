@@ -1,0 +1,72 @@
+/*background-color: #DECADE*/
+body {
+  display: block;
+  background-color: #F5FCFF;
+}
+
+/*make all imgages no bigger than this size including the 404 not found*/
+img {
+  max-width: 75px;
+  max-height: 75px;
+}
+
+#articles{
+  width: 60%;
+  min-height: 700px;
+  display: inline-block;
+  overflow: hidden;
+  margin-left: 59px;
+  padding-top: 50px;
+}
+#notes{
+  width:30%;
+  float:right;
+}
+.nav-main{
+  background: #222;
+  color: #fafafa;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 67px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  z-index: 100;
+}
+
+.wrap {
+  width: 960px;
+  margin-left: 48px;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 6px;
+}
+
+.nav-main .nav-home {
+  color: #00d8ff;
+  font-size: 24px;
+  line-height: 50px;
+  height: 50px;
+  display: inline-block;
+}
+
+h1 /*h2*/ {
+  color: #05A5D1;
+  display: inline-block;
+  padding-left: 330px;
+}
+
+textarea, input{
+  display:block;
+  width:100%;
+  background-color: #FCF5C7;
+}
+input{
+  height:36px;
+  font-size: 24px;
+}
+textarea{
+  height:200px;
+  font-size: 18px;
+}
