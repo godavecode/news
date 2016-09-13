@@ -21,6 +21,7 @@ img {
 #notes{
   width:30%;
   float:right;
+  padding-top: 42px;
 }
 .nav-main{
   background: #222;
